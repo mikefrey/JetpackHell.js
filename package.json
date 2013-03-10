@@ -1,0 +1,29 @@
+{
+  "name": "JetpackHell.js",
+  "version": "0.0.0",
+  "description": "Jetpacks, in Hell, with a sword",
+  "main": "server.js",
+  "dependencies": {
+    "impactjs": "git://github.com/mikefrey/node-impact.git",
+    "express": "3.x.x",
+    "jade": "0.x.x"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikefrey/JetpackHell.js.git"
+  },
+  "keywords": [
+    "jetpack",
+    "hell",
+    "sword",
+    "impactjs"
+  ],
+  "author": "Mike Frey",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "76cd64b1a41bfec2caf54da3678a8d92259bf494"
+}
