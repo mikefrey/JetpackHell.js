@@ -11,6 +11,8 @@ EntityPlayer = ig.Entity.extend({
 	offset: {x: 4, y: 2},
 	gravityFactor: 0,
 
+	correctionMultiplier: 1.2,
+
 	maxVel: {x: 200, y:100 },
 	friction: {x: 200, y: 0},
 
@@ -41,7 +43,7 @@ EntityPlayer = ig.Entity.extend({
 
 		// correct the players vertical height on the screen
 		var target = ig.game.screen.y + (ig.system.height/3)*2
-		if (this.pos.y > target) this.vel.y *= 1.2
+		if (this.pos.y > target) this.vel.y *= this.correctionMultiplier
 
 		// move left or right
 		if( ig.input.state('left')) {
