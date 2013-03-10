@@ -50,21 +50,24 @@ MyGame = ig.Game.extend({
 	},
 
 	update: function() {
-		// Update all entities and BackgroundMaps
-		this.parent();
-
-		// screen follows the player
-		var player = this.getEntitiesByType( EntityPlayer )[0];
-
-		if (player) {
-			this.screen.x = player.pos.x - ig.system.width/2
-		}
 
 		this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
+		// this.scrollSpeed = 30
 		this.screen.y -= ig.system.tick * this.scrollSpeed
 
 		// don't allow the screen to go above 0 for now.
 		if (this.screen.y < 0) this.screen.y = 0
+
+		// screen follows the player
+		var player = this.getEntitiesByType(EntityPlayer)[0];
+
+		if (player) {
+			this.screen.x = player.pos.x - ig.system.width/2
+			player.vel.y = -this.scrollSpeed
+		}
+
+		// Update all entities and BackgroundMaps
+		this.parent();
 	},
 
 	draw: function() {
@@ -72,8 +75,8 @@ MyGame = ig.Game.extend({
 		this.parent();
 
 		// player position
-		var player = this.getEntitiesByType( EntityPlayer )[0];
-		if (player) ig.game.font.draw('Player pos: ' + Math.floor(player.pos.y), 2, 2 );
+		// var player = this.getEntitiesByType( EntityPlayer )[0];
+		// if (player) ig.game.font.draw('Player vel-y: ' + player.vel.y, 2, 2 );
 
 		// if( !ig.ua.mobile ) {
 		// 	this.font.draw( 'Arrow Keys, X, C', 2, 2 );

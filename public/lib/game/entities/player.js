@@ -9,9 +9,10 @@ ig.module(
 EntityPlayer = ig.Entity.extend({
 	size: {x: 8, y:14},
 	offset: {x: 4, y: 2},
+	gravityFactor: 0,
 
-	maxVel: {x: 200, y:0 },
-	friction: {x: 600, y: 0},
+	maxVel: {x: 200, y:100 },
+	friction: {x: 200, y: 0},
 
 	type: ig.Entity.TYPE.A,
 	checkAgainst: ig.Entity.TYPE.NONE,
@@ -33,8 +34,8 @@ EntityPlayer = ig.Entity.extend({
 
 
 	update: function() {
-
-		this.pos.y = ig.game.screen.y + ((ig.system.height/ 3) * 2)
+		// no vertical acceleration
+		this.accel.y = 0
 
 		// move left or right
 		if( ig.input.state('left')) {
@@ -44,6 +45,9 @@ EntityPlayer = ig.Entity.extend({
 		else if( ig.input.state('right') ) {
 			this.accel.x = this.accelHoriz
 			this.flip = false
+		}
+		else {
+			this.accel.x = 0;
 		}
 
 		this.currentAnim = this.anims.fly
@@ -73,13 +77,22 @@ EntityPlayer = ig.Entity.extend({
 
 		// move!
 		this.parent();
+	},
+
+	handleMovementTrace: function( res ) {
+		this.parent(res);
+
 	}
+
 });
 
 
 EntityProjectile = ig.Entity.extend({
 	size: {x: 8, y: 4},
-	maxVel: {x:200, y:0},
+	maxVel: {x:400, y:0},
+
+	ttl: 5,
+	ttlTimer: null, // time to live timer
 
 	type: ig.Entity.TYPE.NONE,
 	checkAgainst: ig.Entity.TYPE.B,
@@ -95,6 +108,16 @@ EntityProjectile = ig.Entity.extend({
 
 		this.vel.x = (settings.flip ? -this.maxVel.x : this.maxVel.x)
 		this.vel.y = 0
+
+		this.ttlTimer = new ig.Timer()
+		this.ttlTimer.set(this.ttl)
+	},
+
+	update: function() {
+		if (this.ttlTimer.delta() > 0)
+			return this.kill()
+
+		this.parent()
 	},
 
 	handleMovementTrace: function( res ) {
