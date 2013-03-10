@@ -124,7 +124,7 @@ EntitySword = ig.Entity.extend({
 	// checkAgainst group. I.e. for this entity, all entities in the B group.
 	check: function( other ) {
 		other.receiveDamage( 10, this );
-		this.kill();
+		// this.kill();
 	}
 
 });
