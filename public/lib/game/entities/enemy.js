@@ -52,6 +52,44 @@ EntityEnemy = ig.Entity.extend({
     if (res.collision.x) {
       this.flip = !this.flip
     }
+  },
+
+  kill: function() {
+    var x = this.pos.x
+    var y = this.pos.y
+    for (var i = 0; i < 8; i++) {
+      ig.game.spawnEntity(EntitySlime, x, y)
+    }
+    this.parent()
+  }
+
+});
+
+EntitySlime = ig.Entity.extend({
+  size: {x: 8, y: 8},
+  offset: {x: 2, y: 2},
+  owner: null,
+
+  type: ig.Entity.TYPE.NONE,
+  checkAgainst: ig.Entity.TYPE.NONE,
+  collides: ig.Entity.COLLIDES.NEVER,
+
+  animSheet: new ig.AnimationSheet( 'media/slime.png', 8, 8 ),
+
+  init: function( x, y, settings ) {
+    this.parent( x, y, settings );
+
+    this.vel = {
+      x: Math.floor(Math.random()*100),
+      y: Math.floor(Math.random()*100)
+    }
+
+    this.addAnim( 'idle', 0.07, [0,1], false );
+    this.currentAnim = this.anims.idle
+  },
+
+  update: function() {
+    this.parent();
   }
 
 });
