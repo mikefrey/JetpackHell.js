@@ -41,7 +41,6 @@ EntityPlayer = ig.Entity.extend({
 	},
 
 	update: function() {
-		this.pos.y = ig.game.screen.y + ((ig.system.height/ 3) * 2)
 		// no vertical acceleration
 		this.accel.y = 0
 
