@@ -9,9 +9,10 @@ ig.module(
 EntityPlayer = ig.Entity.extend({
 	size: {x: 8, y:14},
 	offset: {x: 4, y: 2},
+	// gravity: 100,
 
-	maxVel: {x: 200, y:0 },
-	friction: {x: 600, y: 0},
+	maxVel: {x: 200, y:100 },
+	friction: {x: 0, y: 0},
 
 	type: ig.Entity.TYPE.A,
 	checkAgainst: ig.Entity.TYPE.NONE,
@@ -74,9 +75,11 @@ EntityPlayer = ig.Entity.extend({
 
 	handleMovementTrace: function( res ) {
 		this.parent(res);
-		if (!res.collision.y) {
-			this.pos.y = ig.game.screen.y + ((ig.system.height/ 3) * 2)
-		}
+		// if (!res.collision.y) {
+		// 	// this.pos.y = ig.game.screen.y + ((ig.system.height/ 3) * 2)
+		// } else {
+		// 	console.log('COLLIDED!!!')
+		// }
 	}
 
 });
