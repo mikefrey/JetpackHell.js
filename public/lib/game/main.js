@@ -75,8 +75,8 @@ MyGame = ig.Game.extend({
 		this.parent();
 
 		// player position
-		var player = this.getEntitiesByType( EntityPlayer )[0];
-		if (player) ig.game.font.draw('Player vel-y: ' + player.vel.y, 2, 2 );
+		// var player = this.getEntitiesByType( EntityPlayer )[0];
+		// if (player) ig.game.font.draw('Player vel-y: ' + player.vel.y, 2, 2 );
 
 		// if( !ig.ua.mobile ) {
 		// 	this.font.draw( 'Arrow Keys, X, C', 2, 2 );
