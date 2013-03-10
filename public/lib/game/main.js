@@ -50,11 +50,9 @@ MyGame = ig.Game.extend({
 	},
 
 	update: function() {
-		// Update all entities and BackgroundMaps
-		this.parent();
 
-		// this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
-		this.scrollSpeed = 30
+		this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
+		// this.scrollSpeed = 30
 		this.screen.y -= ig.system.tick * this.scrollSpeed
 
 		// don't allow the screen to go above 0 for now.
@@ -67,6 +65,9 @@ MyGame = ig.Game.extend({
 			this.screen.x = player.pos.x - ig.system.width/2
 			player.vel.y = -this.scrollSpeed
 		}
+
+		// Update all entities and BackgroundMaps
+		this.parent();
 	},
 
 	draw: function() {
