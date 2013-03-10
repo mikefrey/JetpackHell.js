@@ -33,9 +33,6 @@ EntityPlayer = ig.Entity.extend({
 
 
 	update: function() {
-
-		this.pos.y = ig.game.screen.y + ((ig.system.height/ 3) * 2)
-
 		// move left or right
 		if( ig.input.state('left')) {
 			this.accel.x = -this.accelHoriz
@@ -73,13 +70,24 @@ EntityPlayer = ig.Entity.extend({
 
 		// move!
 		this.parent();
+	},
+
+	handleMovementTrace: function( res ) {
+		this.parent(res);
+		if (!res.collision.y) {
+			this.pos.y = ig.game.screen.y + ((ig.system.height/ 3) * 2)
+		}
 	}
+
 });
 
 
 EntityProjectile = ig.Entity.extend({
 	size: {x: 8, y: 4},
-	maxVel: {x:200, y:0},
+	maxVel: {x:400, y:0},
+
+	ttl: 5,
+	ttlTimer: null, // time to live timer
 
 	type: ig.Entity.TYPE.NONE,
 	checkAgainst: ig.Entity.TYPE.B,
@@ -95,6 +103,16 @@ EntityProjectile = ig.Entity.extend({
 
 		this.vel.x = (settings.flip ? -this.maxVel.x : this.maxVel.x)
 		this.vel.y = 0
+
+		this.ttlTimer = new ig.Timer()
+		this.ttlTimer.set(this.ttl)
+	},
+
+	update: function() {
+		if (this.ttlTimer.delta() > 0)
+			return this.kill()
+
+		this.parent()
 	},
 
 	handleMovementTrace: function( res ) {
