@@ -63,7 +63,6 @@ MyGame = ig.Game.extend({
 
 		if (player) {
 			this.screen.x = player.pos.x - ig.system.width/2
-			player.vel.y = -this.scrollSpeed
 		}
 
 		// Update all entities and BackgroundMaps
