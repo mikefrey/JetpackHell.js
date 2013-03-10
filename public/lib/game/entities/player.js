@@ -37,6 +37,8 @@ EntityPlayer = ig.Entity.extend({
 		// no vertical acceleration
 		this.accel.y = 0
 
+		this.vel.y = -ig.game.scrollSpeed
+
 		// move left or right
 		if( ig.input.state('left')) {
 			this.accel.x = -this.accelHoriz
