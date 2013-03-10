@@ -7,8 +7,8 @@ ig.module(
 .defines(function(){
 
 EntityEnemy = ig.Entity.extend({
-  size: {x: 8, y:14},
-  offset: {x: 4, y: 2},
+  size: {x: 24, y:31},
+  offset: {x: 2, y: 2},
   gravityFactor: 0,
 
   maxVel: {x: 200, y:100 },
@@ -18,7 +18,7 @@ EntityEnemy = ig.Entity.extend({
   checkAgainst: ig.Entity.TYPE.A,
   collides: ig.Entity.COLLIDES.PASSIVE,
 
-  animSheet: new ig.AnimationSheet( 'media/character_with_legs.png', 16, 24 ),
+  animSheet: new ig.AnimationSheet( 'media/skull.png', 24, 31 ),
 
   flip: false,
   accelHoriz: 500,
@@ -32,7 +32,7 @@ EntityEnemy = ig.Entity.extend({
   },
 
   setAnimationSheet: function() {
-    this.anims.fly = new ig.Animation( this.animSheet, 0.07, [1,2]);
+    this.anims.fly = new ig.Animation( this.animSheet, 0.20, [0,1,2,1]);
   },
 
   update: function() {
@@ -70,6 +70,9 @@ EntitySlime = ig.Entity.extend({
   offset: {x: 2, y: 2},
   owner: null,
 
+  ttl: 3,
+  ttlTimer: null,
+
   type: ig.Entity.TYPE.NONE,
   checkAgainst: ig.Entity.TYPE.NONE,
   collides: ig.Entity.COLLIDES.NEVER,
@@ -86,9 +89,14 @@ EntitySlime = ig.Entity.extend({
 
     this.addAnim( 'idle', 0.07, [0,1], false );
     this.currentAnim = this.anims.idle
+
+    this.ttlTimer = new ig.Timer()
+    this.ttlTimer.set(this.ttl)
   },
 
   update: function() {
+    if (this.ttlTimer.delta() > 0)
+      return this.kill()
     this.parent();
   }
 
