@@ -8,13 +8,11 @@ ig.module(
 
 	'game.entities.player',
 	'game.entities.crate',
-	'game.levels.test',
-
-	'plugins.box2d.game'
+	'game.levels.test'
 )
 .defines(function(){
 
-MyGame = ig.Box2DGame.extend({
+MyGame = ig.Game.extend({
 
 	scrollSpeed: 1,
 	gravity: 100, // All entities are affected by this
@@ -72,6 +70,10 @@ MyGame = ig.Box2DGame.extend({
 	draw: function() {
 		// Draw all entities and BackgroundMaps
 		this.parent();
+
+		// player position
+		var player = this.getEntitiesByType( EntityPlayer )[0];
+		if (player) ig.game.font.draw('Player pos: ' + Math.floor(player.pos.y), 2, 2 );
 
 		// if( !ig.ua.mobile ) {
 		// 	this.font.draw( 'Arrow Keys, X, C', 2, 2 );
