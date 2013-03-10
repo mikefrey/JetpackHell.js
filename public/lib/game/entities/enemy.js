@@ -11,7 +11,7 @@ EntityEnemy = ig.Entity.extend({
   offset: {x: 2, y: 2},
   gravityFactor: 0,
 
-  maxVel: {x: 200, y:100 },
+  maxVel: {x: 100, y:100 },
   friction: {x: 200, y: 0},
 
   type: ig.Entity.TYPE.B,
@@ -20,7 +20,7 @@ EntityEnemy = ig.Entity.extend({
 
   animSheet: new ig.AnimationSheet( 'media/skull.png', 24, 31 ),
 
-  flip: false,
+  flip: true,
   accelHoriz: 500,
   health: 10,
 
@@ -38,6 +38,11 @@ EntityEnemy = ig.Entity.extend({
   update: function() {
     // no vertical acceleration
     this.accel.y = 0
+
+    if (this.flip)
+      this.vel.x = this.maxVel.x
+    else
+      this.vel.x = -this.maxVel.x
 
     this.currentAnim = this.anims.fly
 
