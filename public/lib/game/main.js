@@ -16,6 +16,7 @@ ig.module(
 
 MyGame = ig.Box2DGame.extend({
 
+	scrollSpeed: 1,
 	gravity: 100, // All entities are affected by this
 
 	// Load a font
@@ -45,6 +46,9 @@ MyGame = ig.Box2DGame.extend({
 		for( var i = 0; i < this.backgroundMaps.length; i++ ) {
 			this.backgroundMaps[i].preRender = true;
 		}
+
+		var player = this.getEntitiesByType(EntityPlayer)[0]
+		if (player) this.screen.y = player.pos.y - (ig.system.height/3)*2
 	},
 
 	update: function() {
@@ -53,19 +57,25 @@ MyGame = ig.Box2DGame.extend({
 
 		// screen follows the player
 		var player = this.getEntitiesByType( EntityPlayer )[0];
-		if( player ) {
-			this.screen.x = player.pos.x - ig.system.width/2;
-			this.screen.y = player.pos.y - ig.system.height/2;
+
+		if (player) {
+			this.screen.x = player.pos.x - ig.system.width/2
 		}
+
+		this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
+		this.screen.y -= ig.system.tick * this.scrollSpeed
+
+		// don't allow the screen to go above 0 for now.
+		if (this.screen.y < 0) this.screen.y = 0
 	},
 
 	draw: function() {
 		// Draw all entities and BackgroundMaps
 		this.parent();
 
-		if( !ig.ua.mobile ) {
-			this.font.draw( 'Arrow Keys, X, C', 2, 2 );
-		}
+		// if( !ig.ua.mobile ) {
+		// 	this.font.draw( 'Arrow Keys, X, C', 2, 2 );
+		// }
 	}
 });
 
@@ -106,7 +116,7 @@ else if( ig.ua.mobile ) {
 
 }
 else {
-	ig.main('#canvas', MyGame, 60, 320, 240, 2);
+	ig.main('#canvas', MyGame, 60, 160, 288, 2);
 }
 
 });
