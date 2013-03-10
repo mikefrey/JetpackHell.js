@@ -39,6 +39,10 @@ EntityPlayer = ig.Entity.extend({
 
 		this.vel.y = -ig.game.scrollSpeed
 
+		// correct the players vertical height on the screen
+		var target = ig.game.screen.y + (ig.system.height/3)*2
+		if (this.pos.y > target) this.vel.y *= 1.2
+
 		// move left or right
 		if( ig.input.state('left')) {
 			this.accel.x = -this.accelHoriz
