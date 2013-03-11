@@ -11,7 +11,7 @@ EntityEnemy = ig.Entity.extend({
   offset: {x: 2, y: 2},
   gravityFactor: 0,
 
-  maxVel: {x: 100, y:100 },
+  maxVel: {x: 50, y:50 },
   friction: {x: 200, y: 0},
 
   type: ig.Entity.TYPE.B,
@@ -23,6 +23,8 @@ EntityEnemy = ig.Entity.extend({
   flip: true,
   accelHoriz: 500,
   health: 10,
+
+  driftIteration: 0,
 
   init: function( x, y, settings ) {
     this.parent( x, y, settings )
@@ -47,6 +49,11 @@ EntityEnemy = ig.Entity.extend({
     this.currentAnim = this.anims.fly
 
     this.currentAnim.flip.x = this.flip;
+
+    var heightDrift = (Math.PI/32) * this.driftIteration 
+
+    this.pos.y += Math.sin(heightDrift)
+    this.driftIteration = this.driftIteration === 128 ? 0 : this.driftIteration + 1
 
     // move!
     this.parent();
