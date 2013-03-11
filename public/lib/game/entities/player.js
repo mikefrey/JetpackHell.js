@@ -54,10 +54,12 @@ EntityPlayer = ig.Entity.extend({
 		if( ig.input.state('left')) {
 			this.accel.x = -this.accelHoriz
 			this.flip = true
+      if(this.weapon) this.weapon.currentAnim.flip.x = true
 		}
 		else if( ig.input.state('right') ) {
 			this.accel.x = this.accelHoriz
 			this.flip = false
+      if(this.weapon) this.weapon.currentAnim.flip.x = false
 		}
 		else {
 			this.accel.x = 0;
@@ -70,7 +72,7 @@ EntityPlayer = ig.Entity.extend({
 			var x = this.pos.x + (this.flip ? -18 : 6 );
 			var y = this.pos.y + 6;
 			this.currentAnim = this.anims.attack;
-			ig.game.spawnEntity( EntitySword, x+1, y-14, {flip:this.flip, owner: this} );
+			this.weapon = ig.game.spawnEntity( EntitySword, x+1, y-14, {flip:this.flip, owner: this} );
 		}
 
 		this.currentAnim.flip.x = this.flip;
@@ -87,7 +89,7 @@ EntityPlayer = ig.Entity.extend({
 });
 
 EntitySword = ig.Entity.extend({
-	size: {x: 24, y: 32},
+	size: {x: 22.5, y: 28.5},
   owner: null,
 
 	type: ig.Entity.TYPE.NONE,
@@ -109,7 +111,6 @@ EntitySword = ig.Entity.extend({
     this.pos.y = this.owner.pos.y - 3.5;
 
 		if (this.currentAnim.loopCount) return this.kill();
-    this.animationRun = 1;
 		this.parent();
 	},
 
