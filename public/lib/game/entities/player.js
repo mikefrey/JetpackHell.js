@@ -17,7 +17,7 @@ EntityPlayer = ig.Entity.extend({
 	friction: {x: 200, y: 0},
 
 	type: ig.Entity.TYPE.A,
-	checkAgainst: ig.Entity.TYPE.NONE,
+	checkAgainst: ig.Entity.TYPE.B,
 	collides: ig.Entity.COLLIDES.PASSIVE,
 
 	animSheet1: new ig.AnimationSheet( 'media/character_with_legs.png', 16, 24 ),
@@ -26,6 +26,8 @@ EntityPlayer = ig.Entity.extend({
 	flip: false,
 	accelHoriz: 500,
 	health: 10,
+
+  timer: new ig.Timer(),
 
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings )
@@ -38,6 +40,7 @@ EntityPlayer = ig.Entity.extend({
 		this.anims.idle = new ig.Animation( this.animSheet1, 1, [0] );
 		this.anims.fly = new ig.Animation( this.animSheet1, 0.07, [1,2]);
 		this.anims.attack = new ig.Animation( this.animSheet2, 5, [0,1,2], true);
+    this.anims.struck = new ig.Animation( this.animSheet1, 0.07, [1,2,3,3,3,3,3])
 	},
 
 	update: function() {
@@ -63,9 +66,16 @@ EntityPlayer = ig.Entity.extend({
 		}
 		else {
 			this.accel.x = 0;
-		}
+		} 
 
-		this.currentAnim = this.anims.fly
+    if (this.struck) {
+      this.currentAnim = this.anims.struck
+      this.struck = this.timer.delta() >= 0 ? false : true
+    }
+    else {
+      this.currentAnim = this.anims.fly
+    }
+		
 
 		// shoot
 		if( ig.input.pressed('shoot') ) {
@@ -83,8 +93,14 @@ EntityPlayer = ig.Entity.extend({
 
 	handleMovementTrace: function( res ) {
 		this.parent(res);
+	},
 
-	}
+  check: function( other ) {
+    // other.receiveDamage( 10, this );
+    // this.kill();
+    this.struck = true
+    this.timer.set(2)
+  }
 
 });
 

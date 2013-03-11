@@ -7,11 +7,11 @@ ig.module(
 .defines(function(){
 
 EntityEnemy = ig.Entity.extend({
-  size: {x: 24, y:31},
+  size: {x: 24, y: 31},
   offset: {x: 2, y: 2},
   gravityFactor: 0,
 
-  maxVel: {x: 50, y:50 },
+  maxVel: {x: 50, y: 50},
   friction: {x: 200, y: 0},
 
   type: ig.Entity.TYPE.B,
@@ -50,7 +50,7 @@ EntityEnemy = ig.Entity.extend({
 
     this.currentAnim.flip.x = this.flip;
 
-    var heightDrift = (Math.PI/32) * this.driftIteration 
+    var heightDrift = (Math.PI/32) * this.driftIteration
 
     this.pos.y += Math.sin(heightDrift)
     this.driftIteration = this.driftIteration === 128 ? 0 : this.driftIteration + 1
