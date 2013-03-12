@@ -24,8 +24,6 @@ EntityEnemy = ig.Entity.extend({
   accelHoriz: 500,
   health: 10,
 
-  driftIteration: 0,
-
   init: function( x, y, settings ) {
     this.parent( x, y, settings )
 
@@ -50,10 +48,7 @@ EntityEnemy = ig.Entity.extend({
 
     this.currentAnim.flip.x = this.flip;
 
-    var heightDrift = (Math.PI/32) * this.driftIteration
-
-    this.pos.y += Math.sin(heightDrift)
-    this.driftIteration = this.driftIteration === 128 ? 0 : this.driftIteration + 1
+    this.pos.y += Math.sin(this.pos.x/10) * (this.flip ? 1 : -1)
 
     // move!
     this.parent();
@@ -64,6 +59,10 @@ EntityEnemy = ig.Entity.extend({
     if (res.collision.x) {
       this.flip = !this.flip
     }
+  },
+
+  check: function( other ) {
+    other.receiveDamage( 10, this );
   },
 
   kill: function() {
