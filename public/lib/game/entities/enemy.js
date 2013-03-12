@@ -24,8 +24,13 @@ EntityEnemy = ig.Entity.extend({
   accelHoriz: 500,
   health: 10,
 
+  startY: 0,
+
   init: function( x, y, settings ) {
     this.parent( x, y, settings )
+
+    this.startY = y
+    console.log('START Y ', y)
 
     // Add the animations
     this.setAnimationSheet();
@@ -48,7 +53,10 @@ EntityEnemy = ig.Entity.extend({
 
     this.currentAnim.flip.x = this.flip;
 
-    this.pos.y += Math.sin(this.pos.x/10) * (this.flip ? 1 : -1)
+    var amplitude = 10
+    var period = 10
+    var angle = this.pos.x * (Math.PI / 180)
+    this.pos.y = this.startY + Math.sin(angle * period) * amplitude
 
     // move!
     this.parent();
