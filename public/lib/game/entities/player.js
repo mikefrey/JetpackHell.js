@@ -25,9 +25,9 @@ EntityPlayer = ig.Entity.extend({
 
 	flip: false,
 	accelHoriz: 500,
-	health: 10,
+	health: 100,
 
-  timer: new ig.Timer(),
+  struckTimer: new ig.Timer(),
 
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings )
@@ -70,12 +70,12 @@ EntityPlayer = ig.Entity.extend({
 
     if (this.struck) {
       this.currentAnim = this.anims.struck
-      this.struck = this.timer.delta() >= 0 ? false : true
+      this.struck = this.struckTimer.delta() >= 0 ? false : true
     }
     else {
       this.currentAnim = this.anims.fly
     }
-		
+
 
 		// shoot
 		if( ig.input.pressed('shoot') ) {
@@ -95,11 +95,9 @@ EntityPlayer = ig.Entity.extend({
 		this.parent(res);
 	},
 
-  check: function( other ) {
-    // other.receiveDamage( 10, this );
-    // this.kill();
+	receiveDamage: function(amount, from) {
     this.struck = true
-    this.timer.set(2)
+    this.struckTimer.set(2)
   }
 
 });
@@ -141,7 +139,6 @@ EntitySword = ig.Entity.extend({
 	// checkAgainst group. I.e. for this entity, all entities in the B group.
 	check: function( other ) {
 		other.receiveDamage( 10, this );
-		// this.kill();
 	}
 
 });
