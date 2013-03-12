@@ -7,8 +7,8 @@ ig.module(
 .defines(function(){
 
 EntityEnemy = ig.Entity.extend({
-  size: {x: 24, y: 31},
-  offset: {x: 2, y: 2},
+  size: {x: 19.5, y: 26},
+  offset: {x: 2, y: 0},
   gravityFactor: 0,
 
   maxVel: {x: 50, y: 50},

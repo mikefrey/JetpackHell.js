@@ -7,13 +7,13 @@ ig.module(
 .defines(function(){
 
 EntityPlayer = ig.Entity.extend({
-	size: {x: 8, y:14},
+	size: {x: 8, y: 19},
 	offset: {x: 4, y: 2},
 	gravityFactor: 0,
 
 	correctionMultiplier: 1.2,
 
-	maxVel: {x: 200, y:100 },
+	maxVel: {x: 200, y: 100 },
 	friction: {x: 200, y: 0},
 
 	type: ig.Entity.TYPE.A,
@@ -66,7 +66,14 @@ EntityPlayer = ig.Entity.extend({
 		}
 		else {
 			this.accel.x = 0;
-		} 
+		}
+
+    if(ig.input.state('up')){
+      this.pos.y -= 1
+    }
+    if(ig.input.state('down')){
+      this.pos.y += 1
+    }
 
     if (this.struck) {
       this.currentAnim = this.anims.struck
@@ -82,7 +89,7 @@ EntityPlayer = ig.Entity.extend({
 			var x = this.pos.x + (this.flip ? -18 : 6 );
 			var y = this.pos.y + 6;
 			this.currentAnim = this.anims.attack;
-			this.weapon = ig.game.spawnEntity( EntitySword, x+1, y-14, {flip:this.flip, owner: this} );
+			this.weapon = ig.game.spawnEntity( EntitySword, x + 1, y - 14, {flip: this.flip, owner: this});
 		}
 
 		this.currentAnim.flip.x = this.flip;
