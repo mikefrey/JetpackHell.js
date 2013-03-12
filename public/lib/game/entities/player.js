@@ -68,13 +68,6 @@ EntityPlayer = ig.Entity.extend({
 			this.accel.x = 0;
 		}
 
-    if(ig.input.state('up')){
-      this.pos.y -= 1
-    }
-    if(ig.input.state('down')){
-      this.pos.y += 1
-    }
-
     if (this.struck) {
       this.currentAnim = this.anims.struck
       this.struck = this.timer.delta() >= 0 ? false : true
