@@ -7,11 +7,11 @@ ig.module(
 .defines(function(){
 
 EntityEnemy = ig.Entity.extend({
-  size: {x: 24, y:31},
-  offset: {x: 2, y: 2},
+  size: {x: 19.5, y: 26},
+  offset: {x: 2, y: 0},
   gravityFactor: 0,
 
-  maxVel: {x: 100, y:100 },
+  maxVel: {x: 50, y: 50},
   friction: {x: 200, y: 0},
 
   type: ig.Entity.TYPE.B,
@@ -24,8 +24,14 @@ EntityEnemy = ig.Entity.extend({
   accelHoriz: 500,
   health: 10,
 
+  startY: 0,
+  travelX: 0,
+
   init: function( x, y, settings ) {
     this.parent( x, y, settings )
+
+    this.startY = y
+    this.travelX = Math.random()*10000|0
 
     // Add the animations
     this.setAnimationSheet();
@@ -48,6 +54,15 @@ EntityEnemy = ig.Entity.extend({
 
     this.currentAnim.flip.x = this.flip;
 
+    // calculate the y position
+    var amplitude = 15
+    var period = 0.1
+    var angle = this.travelX * (Math.PI / 180)
+    this.pos.y = this.startY + Math.sin(angle * period) * amplitude
+
+    // add the current velocity to traveled x
+    this.travelX += this.maxVel.x
+
     // move!
     this.parent();
   },
@@ -57,6 +72,10 @@ EntityEnemy = ig.Entity.extend({
     if (res.collision.x) {
       this.flip = !this.flip
     }
+  },
+
+  check: function( other ) {
+    other.receiveDamage( 10, this );
   },
 
   kill: function() {
