@@ -17,6 +17,12 @@ app.get('/', function(req, res){
   })
 })
 
+app.get('/test', function(req, res){
+  res.render('test.jade', {
+    locals: { title: 'Test level / game' }
+  })
+})
+
 function logErrors(err, req, res, next) {
   console.error(err.stack);
   next(err);
