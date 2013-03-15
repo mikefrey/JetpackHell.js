@@ -8,7 +8,7 @@ ig.module(
 
 	'game.entities.player',
 	'game.entities.crate',
-	'game.levels.test'
+	'game.levels.level1'
 )
 .defines(function(){
 
@@ -35,8 +35,8 @@ MyGame = ig.Game.extend({
 			ig.input.bindTouch( '#buttonJump', 'jump' );
 		}
 
-		// Load the LevelTest as required above ('game.level.test')
-		this.loadLevel( LevelTest );
+		// Load the LevelLevel1 as required above ('game.level.level1')
+		this.loadLevel( LevelLevel1 );
 	},
 
 	loadLevel: function( data ) {
