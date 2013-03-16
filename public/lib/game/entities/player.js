@@ -1,8 +1,8 @@
 ig.module(
-	'game.entities.player'
+  'game.entities.player'
 )
 .requires(
-	'impact.entity'
+  'impact.entity'
 )
 .defines(function(){
 
