@@ -95,7 +95,7 @@ EntitySlime = ig.Entity.extend({
   owner: null,
   health: 1,
 
-  ttl: 3,
+  ttl: 1,
   ttlTimer: null,
 
   type: ig.Entity.TYPE.C,
@@ -108,8 +108,8 @@ EntitySlime = ig.Entity.extend({
     this.parent( x, y, settings );
 
     this.vel = {
-      x: Math.floor(Math.random()*100),
-      y: Math.floor(Math.random()*100)
+      x: Math.floor(Math.random()*20),
+      y: Math.floor(Math.random()*20)
     }
 
     this.addAnim( 'idle', 0.07, [0,1], false );
@@ -119,10 +119,20 @@ EntitySlime = ig.Entity.extend({
     this.ttlTimer.set(this.ttl)
   },
 
+  handleMovementTrace: function( res ) {
+    // This completely ignores the trace result (res) and always
+    // moves the entity according to its velocity
+    this.pos.x += this.vel.x * ig.system.tick;
+    this.pos.y += this.vel.y * ig.system.tick;
+  },
+
   interceptFuelBar: function() {
-    ig.game.screen.x + 20.5 // fuelbar x pos
-     
-    // x1 - x2 / y1 - y2 == slope to get to fuelbar
+    this.vel = {
+     x: ig.game.screen.x + 5.5 - this.pos.x,
+     y: ig.game.screen.y - 2877 - this.pos.y
+    };
+    this.vel.x * this.ttlTimer.delta();
+    this.vel.y * this.ttlTimer.delta();
   },
 
   update: function() {

@@ -145,6 +145,7 @@ EntitySword = ig.Entity.extend({
 });
 
 EntityFuelBar = ig.Entity.extend({
+  size: {x: 50, y: 100},
   owner: null,
   fuelLevel: 0,
 
@@ -155,6 +156,9 @@ EntityFuelBar = ig.Entity.extend({
   init: function( x, y, settings ) {
     this.parent( x, y, settings );
     this.fuelLevel = 100;
+
+    this.pos.x = ig.game.screen.x + 20;
+    this.pos.y = ig.game.screen.x + 2870;
   },
 
   update: function() {
@@ -181,8 +185,8 @@ EntityFuelBar = ig.Entity.extend({
     ig.system.context.fillStyle = "rgb(255,255,255)";
     ig.system.context.beginPath();
     ig.system.context.rect(
-                    (ig.game.screen.x + 20) * ig.system.scale, 
-                    (ig.game.screen.y - 2870) * ig.system.scale, 
+                    (ig.game.screen.x + 10) * ig.system.scale,
+                    (ig.game.screen.y - 2877) * ig.system.scale,
                     52, 
                     102
                 );
@@ -192,8 +196,8 @@ EntityFuelBar = ig.Entity.extend({
     ig.system.context.fillStyle = "rgb(255,0,0)";
     ig.system.context.beginPath();
     ig.system.context.rect(
-                    (ig.game.screen.x + 20.5) * ig.system.scale, 
-                    (ig.game.screen.y - 2869.5) * ig.system.scale, 
+                    (ig.game.screen.x + 10.5) * ig.system.scale,
+                    (ig.game.screen.y - 2876.5) * ig.system.scale,
                     50, 
                     100 * (this.fuelLevel/100)
                 );
