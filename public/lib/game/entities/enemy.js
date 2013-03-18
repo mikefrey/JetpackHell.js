@@ -93,11 +93,12 @@ EntitySlime = ig.Entity.extend({
   size: {x: 8, y: 8},
   offset: {x: 2, y: 2},
   owner: null,
+  health: 1,
 
   ttl: 3,
   ttlTimer: null,
 
-  type: ig.Entity.TYPE.NONE,
+  type: ig.Entity.TYPE.C,
   checkAgainst: ig.Entity.TYPE.NONE,
   collides: ig.Entity.COLLIDES.NEVER,
 
@@ -118,9 +119,17 @@ EntitySlime = ig.Entity.extend({
     this.ttlTimer.set(this.ttl)
   },
 
+  interceptFuelBar: function() {
+    ig.game.screen.x + 20.5 // fuelbar x pos
+     
+    // x1 - x2 / y1 - y2 == slope to get to fuelbar
+  },
+
   update: function() {
-    if (this.ttlTimer.delta() > 0)
-      return this.kill()
+    if (this.ttlTimer.delta() > 0) {
+      this.interceptFuelBar();
+    }
+      // return this.kill()
     this.parent();
   }
 

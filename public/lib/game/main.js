@@ -6,6 +6,8 @@ ig.module(
 	'impact.font',
 	'impact.debug.debug',
 
+	'game.classes.fuel_bar',
+
 	'game.entities.player',
 	'game.entities.crate',
 	'game.levels.test'
@@ -37,6 +39,8 @@ MyGame = ig.Game.extend({
 
 		// Load the LevelTest as required above ('game.level.test')
 		this.loadLevel( LevelTest );
+
+		this.fuelBar = new FuelBar();
 	},
 
 	loadLevel: function( data ) {
@@ -51,12 +55,12 @@ MyGame = ig.Game.extend({
 
 	update: function() {
 
-		this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
+		// this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
 		// this.scrollSpeed = 30
-		this.screen.y -= ig.system.tick * this.scrollSpeed
+		// this.screen.y -= ig.system.tick * this.scrollSpeed
 
 		// don't allow the screen to go above 0 for now.
-		if (this.screen.y < 0) this.screen.y = 0
+		// if (this.screen.y < 0) this.screen.y = 0
 
 		// screen follows the player
 		var player = this.getEntitiesByType(EntityPlayer)[0];
