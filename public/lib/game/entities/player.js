@@ -196,10 +196,10 @@ EntityFuelBar = ig.Entity.extend({
     ig.system.context.fillStyle = "rgb(255,0,0)";
     ig.system.context.beginPath();
     ig.system.context.rect(
-                    (ig.game.screen.x + 10.5) * ig.system.scale,
-                    (ig.game.screen.y - 2876.5) * ig.system.scale,
-                    50, 
-                    100 * (this.fuelLevel/100)
+                    (ig.game.screen.x + 35.5) * ig.system.scale,
+                    (ig.game.screen.y - 2826.5) * ig.system.scale,
+                    -50,
+                    -100 * (this.fuelLevel/100)
                 );
     ig.system.context.closePath();
     ig.system.context.fill();
