@@ -34,7 +34,6 @@ EntityPlayer = ig.Entity.extend({
 
 		// Add the animations
 		this.setAnimationSheet();
-    ig.game.spawnEntity( EntityFuelBar, x + 1, y - 14, {flip: this.flip, owner: this});
 	},
 
 	setAnimationSheet: function() {
@@ -140,70 +139,6 @@ EntitySword = ig.Entity.extend({
   // checkAgainst group. I.e. for this entity, all entities in the B group.
   check: function( other ) {
     other.receiveDamage( 10, this );
-  }
-
-});
-
-EntityFuelBar = ig.Entity.extend({
-  size: {x: 50, y: 100},
-  owner: null,
-  fuelLevel: 0,
-
-  type: ig.Entity.TYPE.NONE,
-  checkAgainst: ig.Entity.TYPE.C,
-  collides: ig.Entity.COLLIDES.NONE,
-
-  init: function( x, y, settings ) {
-    this.parent( x, y, settings );
-    this.fuelLevel = 100;
-
-    this.pos.x = ig.game.screen.x + 20;
-    this.pos.y = ig.game.screen.x + 2870;
-  },
-
-  update: function() {
-    // this.pos.x = ig.game.screen.x + 20;
-    // this.pos.y = this.owner.pos.y - 10;
-    if (this.fuelLevel > 0) this.fuelLevel -= 0.1;
-    this.parent();
-  },
-
-  absorbDamned: function(damned) {
-    this.fuelLevel += damned.health;
-    if (this.fuelLevel > 100) this.fuelLevel = 100;
-    damned.kill();
-  },
-
-  check: function(damned) {
-    this.absorbDamned(damned);
-    // other.receiveDamage( 10, this );
-  },
-
-  draw: function() {
-    // canvas stuff here
-    // border
-    ig.system.context.fillStyle = "rgb(255,255,255)";
-    ig.system.context.beginPath();
-    ig.system.context.rect(
-                    (ig.game.screen.x + 10) * ig.system.scale,
-                    (ig.game.screen.y - 2877) * ig.system.scale,
-                    52, 
-                    102
-                );
-    ig.system.context.closePath();
-    ig.system.context.fill();
-    // fuel
-    ig.system.context.fillStyle = "rgb(255,0,0)";
-    ig.system.context.beginPath();
-    ig.system.context.rect(
-                    (ig.game.screen.x + 35.5) * ig.system.scale,
-                    (ig.game.screen.y - 2826.5) * ig.system.scale,
-                    -50,
-                    -100 * (this.fuelLevel/100)
-                );
-    ig.system.context.closePath();
-    ig.system.context.fill();
-    this.parent();
   }
 
 });

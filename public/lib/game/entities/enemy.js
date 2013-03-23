@@ -92,10 +92,11 @@ EntityEnemy = ig.Entity.extend({
 EntitySlime = ig.Entity.extend({
   size: {x: 8, y: 8},
   offset: {x: 2, y: 2},
+  maxVel: {x: 500, y: 500},
   owner: null,
   health: 1,
 
-  ttl: 1,
+  ttl: 0.4,
   ttlTimer: null,
 
   type: ig.Entity.TYPE.C,
@@ -111,6 +112,8 @@ EntitySlime = ig.Entity.extend({
       x: Math.floor(Math.random()*20),
       y: Math.floor(Math.random()*20)
     }
+
+    this.yAngleFactor = Math.floor(Math.random()*80);
 
     this.addAnim( 'idle', 0.07, [0,1], false );
     this.currentAnim = this.anims.idle
@@ -128,11 +131,17 @@ EntitySlime = ig.Entity.extend({
 
   interceptFuelBar: function() {
     this.vel = {
-     x: ig.game.screen.x + 5.5 - this.pos.x,
-     y: ig.game.screen.y - 2877 - this.pos.y
+     x: ig.game.screen.x + 0 - this.pos.x,
+     y: ig.game.screen.y - this.yAngleFactor - this.pos.y
     };
     this.vel.x * this.ttlTimer.delta();
     this.vel.y * this.ttlTimer.delta();
+
+    if (this.pos.x < ig.game.screen.x + 32 && this.pos.y < ig.game.screen.y + 56) {
+      console.log("die!")
+      ig.game.fuelBar.absorbDamned(this.health);
+      this.kill();
+    }
   },
 
   update: function() {
