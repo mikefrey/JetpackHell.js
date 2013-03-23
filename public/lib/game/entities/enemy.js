@@ -113,7 +113,7 @@ EntitySlime = ig.Entity.extend({
       y: Math.floor(Math.random()*20)
     }
 
-    this.yAngleFactor = Math.floor(Math.random()*80);
+    this.yAngleFactor = Math.floor(Math.random()*60) + 24;
 
     this.addAnim( 'idle', 0.07, [0,1], false );
     this.currentAnim = this.anims.idle
@@ -131,17 +131,25 @@ EntitySlime = ig.Entity.extend({
 
   interceptFuelBar: function() {
     this.vel = {
-     x: ig.game.screen.x + 0 - this.pos.x,
+     x: ig.game.screen.x + 16 - this.pos.x,
      y: ig.game.screen.y - this.yAngleFactor - this.pos.y
     };
     this.vel.x * this.ttlTimer.delta();
     this.vel.y * this.ttlTimer.delta();
 
-    if (this.pos.x < ig.game.screen.x + 32 && this.pos.y < ig.game.screen.y + 56) {
+    if (this.withinFuelBoundsX() && this.withinFuelBoundsY()) {
       console.log("die!")
       ig.game.fuelBar.absorbDamned(this.health);
       this.kill();
     }
+  },
+
+  withinFuelBoundsX: function() {
+    return (this.pos.x < ig.game.screen.x + 32) && (this.pos.x > ig.game.screen.x + 0)
+  },
+
+  withinFuelBoundsY: function() {
+    return (this.pos.y < ig.game.screen.y + 56) && (this.pos.y > ig.game.screen.y + 10)
   },
 
   update: function() {
