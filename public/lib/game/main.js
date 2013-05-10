@@ -6,6 +6,8 @@ ig.module(
 	'impact.font',
 	'impact.debug.debug',
 
+	'game.classes.fuel-bar',
+
 	'game.entities.player',
 	'game.entities.crate',
 	'game.levels.test'
@@ -37,6 +39,8 @@ MyGame = ig.Game.extend({
 
 		// Load the LevelTest as required above ('game.level.test')
 		this.loadLevel( LevelTest );
+
+		this.fuelBar = fuelBar;
 	},
 
 	loadLevel: function( data ) {
@@ -52,7 +56,7 @@ MyGame = ig.Game.extend({
 	update: function() {
 
 		this.scrollSpeed += ig.system.tick * (10/this.scrollSpeed)
-		// this.scrollSpeed = 30
+		this.scrollSpeed = 30
 		this.screen.y -= ig.system.tick * this.scrollSpeed
 
 		// don't allow the screen to go above 0 for now.
@@ -65,6 +69,8 @@ MyGame = ig.Game.extend({
 			this.screen.x = player.pos.x - ig.system.width/2
 		}
 
+    this.fuelBar.update();
+
 		// Update all entities and BackgroundMaps
 		this.parent();
 	},
@@ -72,6 +78,7 @@ MyGame = ig.Game.extend({
 	draw: function() {
 		// Draw all entities and BackgroundMaps
 		this.parent();
+    this.fuelBar.draw();
 
 		// player position
 		// var player = this.getEntitiesByType( EntityPlayer )[0];

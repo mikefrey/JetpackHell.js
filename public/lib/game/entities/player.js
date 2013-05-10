@@ -1,8 +1,8 @@
 ig.module(
-	'game.entities.player'
+  'game.entities.player'
 )
 .requires(
-	'impact.entity'
+  'impact.entity'
 )
 .defines(function(){
 
@@ -124,22 +124,22 @@ EntitySword = ig.Entity.extend({
     this.pos.x = this.owner.pos.x + x_offset;
     this.pos.y = this.owner.pos.y - 3.5;
 
-		if (this.currentAnim.loopCount) return this.kill();
-		this.parent();
+    if (this.currentAnim.loopCount) return this.kill();
+    this.parent();
+  },
+
+  handleMovementTrace: function( res ) {
+    this.parent( res );
+    if( res.collision.x || res.collision.y ) {
+      // this.kill();
+    }
 	},
 
-	handleMovementTrace: function( res ) {
-		this.parent( res );
-		if( res.collision.x || res.collision.y ) {
-			// this.kill();
-		}
-	},
-
-	// This function is called when this entity overlaps anonther entity of the
-	// checkAgainst group. I.e. for this entity, all entities in the B group.
-	check: function( other ) {
-		other.receiveDamage( 10, this );
-	}
+  // This function is called when this entity overlaps anonther entity of the
+  // checkAgainst group. I.e. for this entity, all entities in the B group.
+  check: function( other ) {
+    other.receiveDamage( 10, this );
+  }
 
 });
 
